@@ -1,6 +1,16 @@
 # ros2-teaching-ws
 A template repository for teaching robotics with ROS2
 
+This bearly clears complexity level 1 in simulation (which still needing some manual help, as can be seen in my submission video); this hasn't been tested on a real robot.
+
+To run this assessment:
+
+`ros2 launch uol_tidybot tidybot.launch.py`
+
+`ros2 run  uol_tidybot generate_objects --ros-args -p n_objects:=10`
+
+`ros2 run amr_assessment_1 tidy_robot`
+
 ## Use case
 
 You can use this repository to start developing your ROS2 modules. It provides a preconfigured [Development Container](https://containers.dev/) with ROS2 installed, and a VNC based light Desktop integrated directly.
