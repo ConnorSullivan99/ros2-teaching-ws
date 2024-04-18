@@ -47,8 +47,8 @@ class TidyUpRobot(Node):
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
         # Define the color range for the brightly colored objects
-        lower_color = np.array([40, 40, 40]) # Example: lower range for bright colors
-        upper_color = np.array([70, 255, 255]) # Example: upper range for bright colors
+        lower_color = np.array([40, 40, 40])
+        upper_color = np.array([70, 255, 255])
 
         # Create a mask for the color range
         mask = cv2.inRange(hsv, lower_color, upper_color)
@@ -85,7 +85,6 @@ class TidyUpRobot(Node):
         direction_vector = direction_vector / np.linalg.norm(direction_vector)
 
         # Calculate the angle to the object relative to the robot's current orientation
-        # Assuming the robot's current orientation is aligned with the x-axis
         angle_to_object = np.arctan2(direction_vector[1], direction_vector[0])
 
         # Calculate the distance to the object
@@ -95,10 +94,10 @@ class TidyUpRobot(Node):
         pid_controller = PIDController(kp=0.5, ki=0.1, kd=0.05)
 
         # Update the PID controller
-        angular_velocity = pid_controller.update(angle_to_object, 0.1) # Assuming a fixed time step of 0.1 seconds
+        angular_velocity = pid_controller.update(angle_to_object, 0.1)
 
         # Adjust the robot's speed based on the distance to the object
-        linear_velocity = 0.5 if distance_to_object > 100 else 0.2 # Example: slow down when close
+        linear_velocity = 0.5 if distance_to_object > 100 else 0.2
 
         # Publish the velocity command
         self.publish_velocity(linear_velocity, angular_velocity)
@@ -112,7 +111,6 @@ class TidyUpRobot(Node):
         self.image_height = msg.height
     
         # Process the OpenCV image as needed
-        # For example, detect objects in the image
         self.detect_objects(cv_image, msg.width, msg.height)
 
         # Continuously move towards the next object until no more cubes are detected
@@ -132,7 +130,7 @@ class TidyUpRobot(Node):
         for range in msg.ranges:
             if range < min_distance:
                 # If the robot is against a wall, rotate to scan for cubes behind it
-                self.rotate(angular_velocity=1.5, duration=2) # Rotate at 1.5 rad/s for 2 seconds
+                self.rotate(angular_velocity=1.5, duration=2)
                 return
             
     def main_loop(self):
